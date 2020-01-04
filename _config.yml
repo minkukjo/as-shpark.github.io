@@ -26,7 +26,7 @@ author:
   email:             shpark@hanmail.net
 
 # Fallback image and color
-image:               /assets/img/bg01.png
+image:               /assets/img/nap.jpg
 color:               '#4f86aa'
 
 # The font used for headings. Expects a string that is a valid CSS font-family value.
@@ -50,7 +50,7 @@ google_analytics:    UA-92346434-1
 disqus_shortname:    isme2n
 
 # This text will appear in the footer of every page. Markdown enabled.
-copyright:           '&copy; 2017. by isme2n'
+copyright:           ''
 
 # Format of the permalinks
 permalink:           pretty
