@@ -6,7 +6,7 @@ title:               내가 이해하는 개발
 
 # The unique resource location of your page.
 # Set to `https://<username>.github.io` when hosting on GitHub Pages
-url:                 https://as-shpark.github.io/myblog/
+url:                 https://as-shpark.github.io
 
 # Set to '' when hosting a blog on GitHub Pages, ie on `//<username>.github.io`
 # Set to '/<reponame>' when using the `gh-pages` branch of a repository
