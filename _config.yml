@@ -26,7 +26,7 @@ author:
   email:             shpark@hanmail.net
 
 # Fallback image and color
-image:               /assets/img/bg01.jpg
+image:               /assets/img/bg01.png
 color:               '#4f86aa'
 
 # The font used for headings. Expects a string that is a valid CSS font-family value.

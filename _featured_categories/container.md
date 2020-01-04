@@ -1,7 +1,7 @@
 ---
 layout: list
-title: Container
-slug: Container
+title: container
+slug: container
 menu: true
 submenu: true
 order: 1

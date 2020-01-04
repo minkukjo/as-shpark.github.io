@@ -3,6 +3,6 @@ layout: tag-blog
 title: Kubernetes
 slug: Kubernetes
 category: container
-menu: false
+menu: true
 order: 1
 ---

@@ -1,7 +1,7 @@
 ---
 layout: list
-title: Infra
-slug: Infra
+title: infra
+slug: infra
 menu: true
 submenu: true
 order: 2
