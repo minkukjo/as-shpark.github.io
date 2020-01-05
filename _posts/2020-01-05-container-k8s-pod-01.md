@@ -34,12 +34,13 @@ comments: false
 > Initialized: 모든 초기화 컨테이너가 성공적으로 완료됨  
 > Unschedulable: 스케쥴러가 어떤 이유로 인해 파드를 스케쥴할 수 없음  
 > ContainerReady: 파드 내의 모든 컨테이너가 준비 상태  
+
 ```
-* 그 외 컨디션의 하위 속성
-- lastProbTime: 마지막으로 조건이 조사된 시점
-- lastTransitionTime: 파드가 한 상태에서 다른 상태로 전환된 마지막 시점
-- message: 전환에 대한 사람이 읽을 수 있는 메시지
-- reason: 전환의 이유
+그 외 컨디션의 하위 속성
+lastProbTime: 마지막으로 조건이 조사된 시점
+lastTransitionTime: 파드가 한 상태에서 다른 상태로 전환된 마지막 시점
+message: 전환에 대한 사람이 읽을 수 있는 메시지
+reason: 전환의 이유
 ```
 
 #### * 초기화 컨테이너란? ####
