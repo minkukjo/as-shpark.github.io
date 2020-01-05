@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Pod에 대해 알아보자'
+title: 'Pod의 Lifecycle'
 subtitle: ''
 categories: container
 tags: Kubernetes
