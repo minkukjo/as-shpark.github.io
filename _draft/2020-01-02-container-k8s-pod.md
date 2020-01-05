@@ -1,8 +1,12 @@
 ---
-title2: 파드
-category: 쿠버네티스
-order: 1
+layout: post
+title: 'Pod에 대해'
+subtitle: ''
+categories: container
+tags: Kubernetes
+comments: false
 ---
+
 
 #### 1. 파드의 단계(phase) ####
 - Pending: 파드가 승인되었지만 아직 이미지 생성이 완료되지 않은 단계
