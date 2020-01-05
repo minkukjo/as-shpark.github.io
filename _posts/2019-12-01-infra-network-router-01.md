@@ -4,7 +4,7 @@ title: '라우터 개요'
 subtitle: '라우터에 대해 알아보자'
 categories: infra
 tags: network
-comments: true
+comments: false
 ---
 
 #### 1. 라우팅이란? ####

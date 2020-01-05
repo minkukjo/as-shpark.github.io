@@ -1,12 +1,3 @@
----
-layout: post
-title: '[모던자바스크립트] 31. 문자열'
-subtitle: 'modern javascript, 문자열'
-categories: devlog
-tags: javascript
-comments: true
----
-
 > 이 글은 번역 및 정리 글입니다.
 > 출처: javascript.info
 
