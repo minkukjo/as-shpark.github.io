@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'Spring Cloud Config Server'
-subtitle: '스프링 클라우드를 활용하여 외부 구성 서버 구현 방법에 대해 알아봅니다'
+subtitle: ''
 categories: spring
 tags: spring-cloud
 comments: false
