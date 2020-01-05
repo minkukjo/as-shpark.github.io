@@ -1,8 +1,8 @@
 ---
 layout: tag-blog
-title: spring
-slug: spring
-category: spring-cloud
+title: spring-cloud
+slug: spring-cloud
+category: spring
 menu: false
 order: 1
 ---
