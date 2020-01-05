@@ -1,25 +1,25 @@
 ---
 layout: post
-title: '스프링 클라우드 Config Server'
+title: 'Spring Cloud Config Server'
 subtitle: '스프링 클라우드를 활용하여 외부 구성 서버 구현 방법에 대해 알아봅니다'
 categories: spring
 tags: spring-cloud
 comments: false
 ---
 
-#### 1. 스프링 클라우드 컨피그 ####
+#### 1. Spring Cloud Config Server 특징 ####
 - 중앙 집중식 마이크로서비스 구성을 지원한다.
 - 중앙 집중식 구성 서버는 모든 다른 환경에 속한 마이크로서비스의 모든 구성을 보유한다. 
 - 일반적으로 프로덕션 구성에 대한 액세스가 다른 환경에 비해 더 제한적이길 원한다. 최소한 프로덕션을 위한 별도의 중앙 집중식 구성 서버를 사용하는 것이 좋다.
 - 다중 마이크로서비스의 구성은 단일 깃 리포지토리에 저장된다. 
 
 
-#### 2. 스프링 클라우드 컨피그의 구성요소 ####
-- 스프링 클라우드 컨피그 서버: 버전 관리 리포지토리(Git or Subversion)로 백업된 중앙 집중식 구성 노출을 지원한다. 
-- 스프링 클라우드 컨피그 클라이언트: 애플리케이션이 스프링 클라우드 컨피그 서버에 연결하도록 지원한다. 
+#### 2. Spring Cloud Config 구성요소 ####
+- Spring Cloud Config Server: 버전 관리 리포지토리(Git or Subversion)로 백업된 중앙 집중식 구성 노출을 지원한다. 
+- Spring Cloud Config Client: 애플리케이션이 스프링 클라우드 컨피그 서버에 연결하도록 지원한다. 
 
-#### 3. 스프링 클라우드 컨피그의 구현 단계 ####
-1) 스프링 클라우드 컨피그 서버를 설정한다.
+#### 3. Spring Cloud Config Server 구현 단계 ####
+1) Spring Cloud Config Server를 설정한다.
 ```
 1) 의존성에 org.springframework.cloud:spring-cloud-config-server 를 추가한다.
 2) 메인 클래스에 @EnableConfigServer 어노테이션을 추가한다.
@@ -37,7 +37,7 @@ comments: false
   spring.cloud.config.server.git.uri=file:///d:git_repo
 
 ```
-3) 스프링 클라우드 컨피그 클라이언트를 사용해 마이크로서비스를 구성 서버에 연결한다.
+3) Spring Cloud Config Client를 사용해 마이크로서비스를 구성 서버에 연결한다.
 ```
 1) gradle.build에 의존성 추가
 
