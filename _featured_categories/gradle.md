@@ -1,7 +1,7 @@
 ---
 layout: list
 title: gradle
-slug: container
+slug: gradle
 menu: true
 submenu: false
 order: 4
