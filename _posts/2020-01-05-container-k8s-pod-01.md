@@ -65,4 +65,4 @@ reason: 전환의 이유
 3) Failed / Succeeded:
 - 작업 컨테이너 중 하나라도 error로 terminated 되면 Failed가 된다. 그게 아니라면 Succeeded가 된다. 
 - 이 둘 경우 모두 컨디션의 Ready와 ContainerReady는 false이다.
-- Pod가 Pending 중 바로 Failed로 가는 경우도 있고 통신 장애 발생 시 최초의 파드 상태는 Unknown이지만 해결이 지연 될 시 Failed로 가기도 한다.  
+- 파드가 Pending 중 바로 Failed로 가는 경우도 있고 통신 장애 발생 시 최초의 파드 상태는 Unknown이지만 해결이 지연 될 시 Failed로 가기도 한다.  
