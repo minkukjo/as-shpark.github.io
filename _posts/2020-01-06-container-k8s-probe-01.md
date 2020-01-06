@@ -68,13 +68,19 @@ spec:
       type: DirectoryOrCreate
   terminationGracePeriodSeconds: 0
 
-- 쿠버네티스는 컨테이너 상태가 Running이 되면 initialDelaySeconds(5초)에 명시된 대로 지연하고 있다가 
-  시간이 되면 Probe를 체크한다.
+
+
+- 쿠버네티스는 컨테이너 상태가 Running이 되면 initialDelaySeconds(5초)에 명시된 대로 
+  지연하고 있다가 시간이 되면 Probe를 체크한다.
+
 - readinessProbe를 설정하면 Pod와 Container의 상태는 Running 이더라도 
   이 Probe가 성공하지 않으면 ContainerReady와 Ready의 값은 false가 된다. 
+
 - 실패를 하면 periodSeconds(10초)에 명시된 시간 후에 다시 체크한다.
+
 - false 상태가 지속되면 서비스의 endpoint에서는 이 파드의 IP를 NotReadyAddr로 간주하고
   서비스에 연결하지 않는다.
+
 - successThreshold에 적힌 숫자만큼 성공을 하면 condition의 상태는 true가 되고 
   endpoint도 정상적으로 Addresses로 간주 하면서 서비스와 연결이 된다. 
  
