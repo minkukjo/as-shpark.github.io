@@ -1,4 +1,11 @@
-컨테이너 프로브에 대해 알아보자
+---
+layout: post
+title: '컨테이너 프로브(Probe)에 대해 알아보자'
+subtitle: ''
+categories: container
+tags: Kubernetes
+comments: false
+---
 
 #### 1. 컨테이너 프로브란? ####
 - kublet에 의해 주기적으로 수행되는 컨테이너 진단을 말한다.
