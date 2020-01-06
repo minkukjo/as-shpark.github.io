@@ -15,7 +15,101 @@
 - 직접 선택하려면 노드에 label을 달고 파드를 만들 때 nodeSelector 항목에 해당 노드 label을 넣는다. 
 - 스케쥴러가 판단할 때는 각 노드에 사용 가능한 리소스를 기준으로 파드가 요구하는 리소스를 비교하여 적절한 노드를 선택한다. 
 
+[sample]
 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+  labels:
+     app: pod
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-node1
+  containers:
+  - name: container
+    image: kubetm/app
+    ports:
+    - containerPort: 8080
+
+----------------------------------
+[Service - ClusterIP, NodePort, LoadBalancer]
+1. ClusterIP 타입
+- 클러스터 내에서만 접근 가능, 아 IP로 연결된 파드에 연결 가능하다. 
+- 파드를 여러 개 연결할 수 있다. 서비스가 트랙픽을 분산한다(같은 셀렉터일 경우)
+- 운영자와 같은 인가된 사용자만 접근 가능, 각 서비스 디버깅이나 쿠버네티스 대시보드 관리 등에 사용
+
+2. NodePort 타입
+- 모든 노드에 똑같은 포트가 할당이 되어서 어떤 노드에서든 해당 포트로 접근하면 연결된 서비스에 접근할 수 있다.
+- nodePort 속성에는 30000 ~ 32767 사이의 번호만 입력가능하며 생략했을 시 자동으로 할당하게 된다. 
+- externalTrafficPolicy: Local로 하게 되면 특정 노드로 접근할 경우 해당 노드에 생성된 파드에만 트래픽이 전달된다. 
+  pod가 없는 node에 접근을하면 접근이 안된다. 
+- 보통 node의 호스트 IP는 내부망에서만 접근 가능하기 때문에 내부망에서 접근해야 할 경우 사용, 외부 연동용(데모)으로 잠깐 사용하기도 함
+
+3. Load Balancer 타입
+- NodePort 기능에 추가하여 Load Balancer를 생성한다. 
+- 이 로드밸런서로 접근하기 위한 외부 IP는 쿠버네티스를 설치했을 때 개별적으로 생성되지 않는다. 별도로 IP를 할당해주는 플러그인이 설치되어 있어야 한다. 
+- 외부에 시스템을 노출하는 용도로 사용
+
+[sample]
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+  labels:
+     app: pod
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-node1
+  containers:
+  - name: container
+    image: kubetm/app
+    ports:
+    - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-1
+spec:
+  selector:
+    app: pod
+  ports:
+  - port: 9000
+    targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-2
+spec:
+  selector:
+    app: pod
+  ports:
+  - port: 9000
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort
+  externalTrafficPolicy: Local
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-3
+spec:
+  selector:
+    app: pod
+  ports:
+  - port: 9000
+    targetPort: 8080
+  type: LoadBalancer
+
+ 
 
  -----------------------------------------
 [컨트롤러]
@@ -235,7 +329,7 @@ ReclaimPolicy
 Pod (ReadnessProbe, LivenessProbe)
 
 ReadinessProbe
-- 파드가 Running 상태가 되면 서비스로부터 트개픽 유입이 시작되는데, 이 때 App이 booting 중이면 사용자들이 에러 페이지를 볼 수 있다.
+- 파드가 Running 상태가 되면 서비스로부터 트래픽 유입이 시작되는데, 이 때 App이 booting 중이면 사용자들이 에러 페이지를 볼 수 있다.
   ReadinessProbe를 사용하게 되면 App 구동 순간에 트래픽 실패를 없앨 수 있다. App이 구동되기 전까지는 서비스와 연결되지 않게 해준다. 
 
 LivenessProbe
@@ -255,16 +349,15 @@ LivenessProbe
 - tcpSocket:
   Port(8080), Host(localhost)
 - 옵션 값으로 initalDelaySeconds, periodSeconds, timeoutSeconds, successThreshold, failureThreshold 가 있다.
-  initalDelaySeconds: default 0초, 최초 probe를 하기전에 delay 시간
+  initialDelaySeconds: default 0초, 최초 probe를 하기전에 delay 시간
   periodSeconds: default 10초, probe를 체크하는 시간의 간격
   timeoutSeconds: default 1초, 이 지정된 시간까지 결과가 와야 한다.
   successThreshold: default 1회, 몇 번 성공 결과를 받아야 정말 성공으로 인정을 할 건지 지정
   failureThreshold: default 3회, 몇 번 실패 결과를 받아야 정말 실패로 인정을 할 건지 지정
   설정 값을 안넣는다면 모두 default 값으로 지정이 된다.
 
-- ReadinessProbe를 설정하면 Pod와 Container의 상태는 Running 이더라도 이 Pobe가 성공하지 않으면
-  Condition의 ContainerReady와 Ready 값은 false가 된다.
-  false 상태가 지속되면 Endpoint에서는 이 Pod의 IP를 NotReadyAddr로 간주를 하고 셔비스에 연결하지 않는다. 
+- ReadinessProbe를 설정하면 Pod와 Container의 상태는 Running 이더라도 이 Probe가 성공하지 않으면 Condition의 ContainerReady와 Ready 값은 false가 된다.
+  false 상태가 지속되면 Endpoint에서는 이 Pod의 IP를 NotReadyAddr로 간주를 하고 서비스에 연결하지 않는다. 
   쿠버네티스는 컨테이너 상태가 running이 되면 initalDelaySeconds에 명시된 대로 지연하고 있다가 시간이 되면 Probe를 체크한다.
   실패를 하면 periodSeconds에 명시된 시간 후에 다시 체크한다. 
   successThreshold에 적힌 숫자만큼 성공을 하면 condition의 상태는 true가 되고 endpoint도 정상적으로 Addresses로 간주를 하면서 서비스와 연결이 된다. 
