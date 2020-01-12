@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Spring Cloud Config Server'
+title: 'Spring Cloud Config Server에 대해 알아보자'
 subtitle: ''
 categories: spring
 tags: spring-cloud
