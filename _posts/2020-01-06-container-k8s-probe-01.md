@@ -35,8 +35,8 @@ comments: false
 > initialDelaySeconds: 최초 probe를 하기 전에 delay 시간(default: 0초)  
 > periodSeconds: probe를 체크하는 시간의 간격(default: 10초)
 > timeoutSeconds: 이 지정된 시간까지 결과가 와야 한다.(default: 1초)  
-> successThreshold: 몇 번 성공 결과를 받아야 정말 성공으로 인정할 건지를 지정한다.(default 1회)  
-> failureThreshold: 몇 번 실패 결과를 받아야 정말 실패로 인정할 건지를 지정한다.(default 3회)
+> successThreshold: 몇 번 성공 결과를 받아야 정말 성공으로 인정할 건지를 지정한다.(default: 1회)  
+> failureThreshold: 몇 번 실패 결과를 받아야 정말 실패로 인정할 건지를 지정한다.(default: 3회)
 
 #### 4. ReadinessProbe 설정 예 ####
 ```
