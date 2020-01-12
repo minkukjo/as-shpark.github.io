@@ -17,10 +17,10 @@ comments: false
 ```
 
 3) 파일 실행 후, 실행되는 화면에서 specify location 항목을 클릭한다.   
-![01.PNG](/assets/img/lombok-01.PNG){: width="600" height="400"}
+![01.PNG](/assets/img/lombok-01.png){: width="600" height="400"}
 
 4) STS가 설치된 경로로 이동하여 실행파일을 선택한다.   
-![02.png]((/assets/img/lombok-02.PNG){: width="600" height="400"}
+![02.png]((/assets/img/lombok-02.png){: width="600" height="400"}
 
 5) Quit installer를 선택한다.  
 ![03.png](/assets/img/lombok-03.PNG){: width="600" height="400"}
