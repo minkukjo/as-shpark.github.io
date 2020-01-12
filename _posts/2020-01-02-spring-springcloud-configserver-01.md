@@ -19,7 +19,7 @@ comments: false
 - Spring Cloud Config Client: 애플리케이션이 스프링 클라우드 컨피그 서버에 연결하도록 지원한다. 
 
 #### 3. Spring Cloud Config Server 구현 단계 ####
-
+![01.PNG](/assets/img/cloud-config-001.PNG){: width="600" height="400"}
 ##### 1. Config Server 구성 #####
 - Spring Cloud Config Server를 설정한다.
 1) gradle.build에 의존성을 추가한다.
@@ -84,12 +84,12 @@ spring.cloud.config.uri=http://localhost:8888
 - 부트스트랩 프로세스 중에 검색된 구성은 내부에 정의된 구성보다 우선한다.
 ```
 
-#### 4. 서버 운영 중 설정 파일 변경이 일어날 때, 적용하는 방법 ####
-1. build.gradle의 dependencies에 아래와 같이 추가한다.
+#### 4. 서버 운영 중 설정 파일 변경이 일어날 때, 서버 재시작 없이 갱신하는 방법 ####
+1. 클라이언트 서버에서 build.gradle의 dependencies에 아래와 같이 추가한다.
 ```
 implementation 'org.springframework.boot:spring-boot-starter-actuator'
 ```
-2. 클라이언트 모듈에서 config server의 내용을 반영하는 class에 @RefreshScope를 추가한다. 
+2. config server의 내용을 반영하는 class에 @RefreshScope를 추가한다. 
 3. bootstrap.properties에 management.endpoints.web.exposure.include=refresh를 추가한다.
 4. 서버 운영 중, 설정 파일이 변경 된다면 다음과 같이 POST 요청을 날린다.
 ```
