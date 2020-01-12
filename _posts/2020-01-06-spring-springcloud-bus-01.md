@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Spring Cloud Bus'
+title: 'Spring Cloud Bus에 대해 알아보자'
 subtitle: ''
 categories: spring
 tags: spring-cloud
