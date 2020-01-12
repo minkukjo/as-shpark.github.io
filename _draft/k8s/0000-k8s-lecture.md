@@ -109,9 +109,103 @@ spec:
     targetPort: 8080
   type: LoadBalancer
 
- 
+-----------------------------------------
+[Volume]
+emptyDir
+- 파드 내 컨테이너끼리 볼륨을 공유
+- 파드가 재생성되면 데이터는 사라지므로 일시적인 데이터만 저장해야 한다.
 
- -----------------------------------------
+ex)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-1
+spec:
+  containers:
+  - name: container1
+    image: kubetm/init
+    volumeMounts:
+    - name: empty-dir
+      mountPath: /mount1
+  - name: container2
+    image: kubetm/init
+    volumeMounts:
+    - name: empty-dir
+      mountPath: /mount2
+  volumes:
+  - name : empty-dir
+    emptyDir: {}
+
+
+hostPath
+- 파드가 올라가 있는 노드에 볼륨을 생성하고 파드끼리 공유한다.
+- 파드가 다른 노드에 재생성된다면 해당 볼륨에는 접근할 수 없다. 
+- 파드 자신이 할당되어 있는 호스트의 데이터를 읽거나 쓸 경우에 사용한다. 
+- 생성 시, 사전에 해당 노드에 경로가 미리 존재해야 한다.
+
+ex)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-3
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-node1
+  containers:
+  - name: container
+    image: kubetm/init
+    volumeMounts:
+    - name: host-path
+      mountPath: /mount1
+  volumes:
+  - name : host-path
+    hostPath:
+      path: /node-v
+      type: DirectoryOrCreate
+
+* DirectoryOrCreate : 만약 노드에 path가 없으면 자동 생성하겠다는 내용
+
+PVC / PV
+- 볼륨의 형태는 다양하다.(로컬 or 외부 클라우드, NFS)
+- 퍼시스턴트 볼륨은 Admin 영역이고 퍼시스턴트 볼륨 클래임은 User 영역이다.
+- PVC를 만들 때 storageClassName을 빈값("")으로 하면 현재 생성되어 있는 PV 중 가장 적합한 것이 연결된다.
+- PV에 클래임이 한번 바인딩되면 PV는 다른 클래임에서 사용할 수 없다. 
+-----------------------------------------
+Object - ConfigMap, Secret
+- 운영환경과 상용환경에서 서비스의 보안 접근이 서로 다를 경우
+- 이미지의 값을 각각 관리할 수 없으므로 환경에 따라 변하는 값은 외부에서 결정할 수 있게 하는데 
+  그걸 도와주는 것이 ConfigMap과 Secret이다.
+- 일반적인 설엉은 ConfigMap으로 보안이 필요한 경우에는 Secret으로 한다.
+- 이 두 값을 설정하면 해당 컨테이너 서비스에 환경변수(Env)로 들어가게 된다. 
+  서비스에서는 환경 변수의 값을 읽어서 사용하게 된다.
+
+ConfigMap, Secret 설정 방법
+상수를 넣는 방법
+- key와 value로 구성, spring 이므로 boolean값을 넣고 싶으면 ''(쿼테이션)를 달아줘야 한다.
+- Secret의 value를 넣을 때는 base64 인코딩을 해서 넣어야 한다.
+- 일반적인 Object 값들은 쿠버네티스 DB에 저장이 되는데 Secret 값은 메모리에 저장이 된다.
+- Secret은 1MB 까지만 넣을 수 있고(시스템 자원에 영향을 준다) ConfigMap은 제약이 없다.
+
+파일을 환경변수에 넣는 방법
+- 파일을 통으로 ConfigMap에 넣을 수 있는데 파일명이 key가 되고 파일 안의 내용이 value가 된다.
+- 키를 넣을 때는 파일명을 넣으면 좀 이상할 수 있으니 재정의해서 넣을 수 있다.
+- 파일을 ConfigMap에 넣는 건 대시보드에서 지원안함 -> 직접 마스터에 접속해서 kubectl 명령으로 해야 한다.
+  kubectl create configmap cm-file --from-file=./file.txt
+- Secret의 경우 다음과 같이 명령을 날린다.
+  kubectl create secret generic sec-file --from-file=./file.txt
+  명령을 통해 파일 안의 내용의 base64로 인코딩 된다. 
+- Pod 생성 시 ConfigMap을 한번 주입하면 끝이므로 ConfigMap을 변경한다고 해도 기존 파드에는 아무 영향이 없다.
+
+볼륨 마은트
+- 파일을 ConfigMap에 담는 것 까지는 똑같다.
+- Pod를 만들 때 mount path를 정의하고 path안에 파일을 마운팅할 수 있다.
+- ConfigMap이 변경되면 기존 Pod에 마운팅된 내용도 변하게 된다. 
+
+
+
+
+
+-----------------------------------------
 [컨트롤러]
 1) 오토힐링: 파드나 노드에 문제 발생 시, 다른 노드에 파드 생성
 2) 오토 스케일링: 파드에 부하가 걸릴 때 파드를 복제함
@@ -329,7 +423,7 @@ ReclaimPolicy
 Pod (ReadnessProbe, LivenessProbe)
 
 ReadinessProbe
-- 파드가 Running 상태가 되면 서비스로부터 트래픽 유입이 시작되는데, 이 때 App이 booting 중이면 사용자들이 에러 페이지를 볼 수 있다.
+- 파드가 Running 상태가 되면 서비스로부터 트개픽 유입이 시작되는데, 이 때 App이 booting 중이면 사용자들이 에러 페이지를 볼 수 있다.
   ReadinessProbe를 사용하게 되면 App 구동 순간에 트래픽 실패를 없앨 수 있다. App이 구동되기 전까지는 서비스와 연결되지 않게 해준다. 
 
 LivenessProbe
@@ -349,15 +443,16 @@ LivenessProbe
 - tcpSocket:
   Port(8080), Host(localhost)
 - 옵션 값으로 initalDelaySeconds, periodSeconds, timeoutSeconds, successThreshold, failureThreshold 가 있다.
-  initialDelaySeconds: default 0초, 최초 probe를 하기전에 delay 시간
+  initalDelaySeconds: default 0초, 최초 probe를 하기전에 delay 시간
   periodSeconds: default 10초, probe를 체크하는 시간의 간격
   timeoutSeconds: default 1초, 이 지정된 시간까지 결과가 와야 한다.
   successThreshold: default 1회, 몇 번 성공 결과를 받아야 정말 성공으로 인정을 할 건지 지정
   failureThreshold: default 3회, 몇 번 실패 결과를 받아야 정말 실패로 인정을 할 건지 지정
   설정 값을 안넣는다면 모두 default 값으로 지정이 된다.
 
-- ReadinessProbe를 설정하면 Pod와 Container의 상태는 Running 이더라도 이 Probe가 성공하지 않으면 Condition의 ContainerReady와 Ready 값은 false가 된다.
-  false 상태가 지속되면 Endpoint에서는 이 Pod의 IP를 NotReadyAddr로 간주를 하고 서비스에 연결하지 않는다. 
+- ReadinessProbe를 설정하면 Pod와 Container의 상태는 Running 이더라도 이 Pobe가 성공하지 않으면
+  Condition의 ContainerReady와 Ready 값은 false가 된다.
+  false 상태가 지속되면 Endpoint에서는 이 Pod의 IP를 NotReadyAddr로 간주를 하고 셔비스에 연결하지 않는다. 
   쿠버네티스는 컨테이너 상태가 running이 되면 initalDelaySeconds에 명시된 대로 지연하고 있다가 시간이 되면 Probe를 체크한다.
   실패를 하면 periodSeconds에 명시된 시간 후에 다시 체크한다. 
   successThreshold에 적힌 숫자만큼 성공을 하면 condition의 상태는 true가 되고 endpoint도 정상적으로 Addresses로 간주를 하면서 서비스와 연결이 된다. 
