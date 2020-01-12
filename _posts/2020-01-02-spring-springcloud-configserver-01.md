@@ -49,7 +49,8 @@ implementation 'org.springframework.cloud:spring-cloud-config-server'
 
 ##### 3. Config Client 구성 #####
 - Spring Cloud Config Client를 사용해 마이크로서비스를 Config Server에 연결한다.
-1) gradle.build에 의존성을 추가한다.
+1) gradle.build에 의존성을 추가한다.  
+
 ```
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
