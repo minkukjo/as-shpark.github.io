@@ -23,7 +23,7 @@ comments: false
 ![02.png]((/assets/img/lombok-02.png){: width="600" height="400"}
 
 5) Quit installer를 선택한다.  
-![03.png](/assets/img/lombok-03.PNG){: width="600" height="400"}
+![03.png](/assets/img/lombok-03.png){: width="600" height="400"}
 
 #### **2. gradle에서 롬복 설정하기** ####
 ```
