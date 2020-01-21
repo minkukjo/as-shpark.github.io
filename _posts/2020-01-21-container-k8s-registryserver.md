@@ -10,11 +10,11 @@ comments: false
 ## 쿠버네티스에서 private registry 이미지 사용하기 ##
 쿠버네티스에서 private registry에 있는 이미지를 이용하여 파드를 생성하는 방법에 대해서 알아본다. 작업 순서는 아래와 같다.
 
-1) 도커 설치
-2) registry 서버 구축
-3) insecure-registries 설정
-4) 이미지 빌드 및 푸시
-5) 파드 생성
+1) 도커 설치  
+2) registry 서버 구축  
+3) insecure-registries 설정  
+4) 이미지 빌드 및 푸시  
+5) 파드 생성  
 
 ### 1. 도커 설치(CenOS7 기준) ###
 우선 private registry를 구축하기 위해 도커를 설치해야 한다.  
