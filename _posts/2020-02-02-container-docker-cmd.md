@@ -10,7 +10,8 @@ comments: false
 #### **1. 이미지 관련 명령어** ####
 
 ##### **1) 이미지 빌드 하기**  #####
-* docker image build -t 이미지명[:태그명] Dockerfile의 경로
+* docker image build -t 이미지명[:태그명] Dockerfile의 경로  
+
 ```
 > docker image build -t example/echo:latest .
 - t: 이미지명을 지정한다. 태그명도 지정할 수 있으며, 생략 시에는 latest 태그가 붙는다. 
@@ -24,6 +25,7 @@ comments: false
 
 ##### **2) 도커 허브에 등록된 리포지토리 검색하기** #####
 * docker search [options] 검색 키워드
+
 ```
 > docker search --limit 5 mysql
 - limit: 최대 검색 건수를 제한한다.
@@ -32,27 +34,32 @@ comments: false
 
 ##### **3) 이미지 내려 받기** #####
 * docker image pull [options] 리포지토리명[:태그명]
+
 ```
 > docker image pull jenkins:latest
 ```
 
 ##### **4) 보유한 이미지 목록 보기** #####
 * docker image ls [options] [리포지토리[:태그]]
+
 ```
 > docker image ls
 ```
 
 ##### **5) 이미지에 태그 부여하기** #####
 * docker image tag 기반이미지명[:태그] 새이미지명[:태그]
+
 ```
 > docker imaage tag example/echo:latest example/echo:0.1.0
 ```
 
 ##### **6) 태그 붙지 않은 이미지 조회** #####
+
 ```
 > docker images -f "dangling=true" -q
 ```
 ##### **7) 태그 붙지 않은 이미지 모두 삭제** #####
+
 ```
 > docker rmi $(docker images -f "dangling=true" -q)
 ```
@@ -62,6 +69,7 @@ comments: false
 ##### **1) 컨테이너 실행하기**  #####
 * docker container run [options] 이미지명[:태그] [명령] [명령인자..]  
 * docker container run [options] 이미지ID [명령] [명령인자..]  
+
 ```
 > docker container run -d -p 9000:8080 example/echo:latest
 > docker container run -it alpine:3.7
@@ -77,6 +85,7 @@ comments: false
 
 ##### **2) 컨테이너에 이름 붙이기**  #####
 * docker container run --name [컨테이너명] [이미지명]:[태그]  
+
 ```
 > docker container run -t -d --name gihyo-echo example/echo:latest
 
@@ -86,6 +95,7 @@ comments: false
 
 ##### **3) 도커 컨테이너 목록 보기** #####
 * docker continaer ls [options]
+
 ```
 > docker continaer ls
 - 아무 옵션 없이 명령을 실행하면 현재 실행 중인 컨테이너의 목록이 출력된다. 
@@ -103,18 +113,21 @@ comments: false
 
 ##### **4) 컨테이너 정지하기** #####
 * docker container stop 컨테이너 ID 또는 컨테이너명
+
 ```
 > docker container stop echo
 ```
 
 ##### **5) 컨테이너 재시작하기** #####
 * docker container restart 컨테이너ID 또는 컨테이너명
+
 ```
 > docker container restart echo
 ```
 
 ##### **6) 컨테이너 파기하기** #####
 * docker container rm 컨테이너ID 또는 컨테이너명
+
 ```
 > docker container rm f66f6f2013da
 > docker container rm -f f66f6f2013da
@@ -123,6 +136,7 @@ comments: false
 
 ##### **7) 표준 출력 연결하기** #####
 * docker container logs [options] 컨테이너ID 또는 컨테이너명
+
 ```
 > docker container logs -f $(docker container ls --filter "ancestor=jenkins" -q)
 
@@ -132,6 +146,7 @@ comments: false
 
 ##### **8) 실행 중인 컨테이너에서 명령 실행하기** #####
 * docker container exec [options] {컨테이ID 또는 컨테이너명} {실행할 명령}
+
 ```
 > docker container exec echo pwd
 > docker container exec -it echo sh
@@ -141,6 +156,7 @@ comments: false
 
 ##### **9) 파일 복사하기** #####
 * docker container cp [options] 컨테이너 ID 또는 컨테이너명:원본파일 대상파잉
+
 ```
 > docker container cp echo:/echo/main.go .
 > docker container cp dummy.txt echo/tmp
@@ -152,6 +168,7 @@ comments: false
 
 ##### **1) 컨테이너 일괄 삭제** #####
 * docker container prune [options]
+
 ```
 > docker continer prune
 - 실행 중이 아닌 모든 컨테이너를 삭제한다.
@@ -159,18 +176,23 @@ comments: false
 
 ##### **2) 이미지 일괄 삭제** #####
 * docker image prune [options]
+
 ```
 > docker image prune
 - 태그가 붙지 않은(dangling) 모든 이미지를 삭제한다. 
 - 실행 중인 컨테이너 이미지는 삭제되지 않는다. 
 ```
+
 ##### **3) 이미지/컨테이너 일괄 삭제** #####
+
 ```
 > docker system prune
 - 사용하지 않는 도커 이미지 및 컨테이너, 볼륨, 네트워크 증 모든 도커 리소스를 일괄적으로 삭제한다. 
 ```
+
 ##### **4) 사용 현황 확인하기** #####
 * docker container stats [options] [대상 컨테이너 ID ...]
+
 ```
 > docker container stats 
 - 시스템 리소스 사용 현황을 컨테이너 단위로 확인할 수 있다. 
