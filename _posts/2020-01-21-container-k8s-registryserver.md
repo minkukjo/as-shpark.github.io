@@ -40,7 +40,7 @@ comments: false
 > docker pull registry:latest
 
 2) 해당 이미지로 레지스트리 컨테이너를 띄운다.
-> docker run --name private-registry -d -p 5000:5000 registry
+> docker run --name private-registry -v /etc/registry:/var/lib/registry/docker/registry/v2 -d -p 5000:5000 registry
 
 3) 정상 실행하는지 확인한다.
 > docker ps -l
@@ -54,7 +54,7 @@ comments: false
 
 {
 
- "insecure-registries" : ["<registry ip>:5000"]
+ "insecure-registries": ["<ip>:5000"]
 
 }
 
@@ -62,7 +62,7 @@ comments: false
 > systemctl restart docker
 ```
 
-* 만약 Window PC에서 이미지를 push 하는 경우, 다음과 같이 docker desktop의 setting > daemon > insecure-registries 항목에 ip:port 정보를 추가해 준다. 
+* 만약 Window PC에서 이미지를 push 하는 경우, docker desktop의 setting > daemon > insecure-registries 항목에 ip:port 정보를 추가해 준다. 
 
 ### 4. 로컬 PC에서 이미지 빌드 및 push ###
 로컬 PC에서 자신의 app 이미지를 빌드하고 registry 서버로 push 한다.
@@ -73,7 +73,14 @@ comments: false
 
 2) 빌드한 이미지를 레지스트리 서버에 push한다.
 
-docker push <registry server IP:Port>/test/test01:latest
+> docker push <registry server IP:Port>/test/test01:latest
+
+3) 이미지가 registry server에 제대로 푸시되었는지 확인한다.
+- 이미지 목록 확인
+> curl -X GET http://<registry server IP:Port>/v2/_catalog 
+
+- 특정 이미지의 tag 확인
+> curl -X GET http://<registry server IP:Port>/v2/test/test1000/tags/list
 ```
 
 * 이미지 빌드 시, registry server의 IP와 Port 정보는 반드시 들어가야 한다. 
