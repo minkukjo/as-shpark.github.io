@@ -80,7 +80,7 @@ comments: false
 > curl -X GET http://<registry server IP:Port>/v2/_catalog 
 
 - 특정 이미지의 tag 확인
-> curl -X GET http://<registry server IP:Port>/v2/test/test1000/tags/list
+> curl -X GET http://<registry server IP:Port>/v2/test/test100/tags/list
 ```
 
 * 이미지 빌드 시, registry server의 IP와 Port 정보는 반드시 들어가야 한다. 

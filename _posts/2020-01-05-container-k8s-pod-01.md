@@ -60,7 +60,7 @@ reason: 전환의 이유
 
 2) Running:  
 - 모든 컨테이너가 정상적으로 실행되면 파드와 컨테이너의 상태는 Running이 된다.
-- 하나 이상의 컨테이너가 비정상적이르면 파드는 Running이지만 컨테이너 상태는 Wating이다. 그리고 컨디션의 Ready와 ContainerReady는 false이다.
+- 하나 이상의 컨테이너가 비정상적이라면 파드는 Running이지만 컨테이너 상태는 Wating이다. 그리고 컨디션의 Ready와 ContainerReady는 false이다.
 
 3) Failed / Succeeded:
 - 작업 컨테이너 중 하나라도 error로 terminated 되면 Failed가 된다. 그게 아니라면 Succeeded가 된다. 
